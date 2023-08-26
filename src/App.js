@@ -1,11 +1,35 @@
 import "./App.css";
+import React,{useState} from "react";
+import data from './data';
+import Tours from "./components/Tours"
 
-function App() {
+
+const App = () => {
+
+
+  const [tours,setTours]=useState(data);
+
+  function removeTour(id){
+    const newTours=tours.filter(tour=>tour.id != id);
+    setTours(newTours);
+  }
+
+  if(tours.length===0) {
+    return (
+      <div className="refresh">
+        <h2>No Tours Left</h2>
+        <button className="btn-white" onClick={()=>setTours(data)}>
+        Refresh
+        </button>
+      </div>
+    )
+  }
+
   return (
-    <main class="flex justify-center gap-4 flex-col min-h-screen">
-      <h1 className="bg-red-700">Hello</h1>
-
-    </main>
+    <div className="App">
+      <Tours tours={tours} removeTour={removeTour}></Tours>
+    </div>
+    
   );
 }
 
